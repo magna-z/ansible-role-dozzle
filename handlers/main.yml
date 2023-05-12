@@ -1,0 +1,7 @@
+---
+- name: restart service dozzle
+  ansible.builtin.systemd:
+    name: dozzle
+    daemon_reload: true
+    enabled: true
+    state: restarted

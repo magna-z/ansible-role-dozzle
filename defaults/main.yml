@@ -1,0 +1,13 @@
+---
+dozzle_docker_image: amir20/dozzle:latest
+dozzle_docker_network: bridge
+dozzle_docker_publish_ports: []
+dozzle_docker_labels: []
+
+dozzle_basepath: /
+dozzle_username: ""
+dozzle_password: ""
+
+dozzle_filter: []
+
+dozzle_log_level: error
