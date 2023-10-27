@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/dozzle.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     content: |
       [Unit]
       Requires=docker.service
@@ -19,15 +19,13 @@
         --pid=host \
         --stop-timeout=30 \
         --network={{ dozzle_docker_network }} \
-        {% if dozzle_docker_network != 'host' -%}
-        {% for publish in dozzle_docker_publish_ports -%}
+        {% if dozzle_docker_network != 'host' %}{% for publish in dozzle_docker_publish_ports -%}
         --publish={{ publish }} \
-        {% endfor -%}
-        {% endif -%}
+        {% endfor %}{% endif -%}
         --volume=/var/run/docker.sock:/var/run/docker.sock:rw \
-        {% for key, value in dozzle_docker_labels.items() -%}
+        {% if dozzle_docker_labels | length > 0 %}{% for key, value in dozzle_docker_labels.items() -%}
         --label={{ key }}="{{ value }}" \
-        {% endfor -%}
+        {% endfor %}{% endif -%}
         {{ dozzle_docker_image }} --no-analytics=true
           {{- ' --level='~dozzle_log_level if dozzle_log_level }}
           {{- ' --base='~dozzle_basepath if dozzle_basepath }}
